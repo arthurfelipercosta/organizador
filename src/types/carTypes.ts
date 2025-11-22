@@ -11,4 +11,4 @@ export interface Carro {
     tipoPneu?: string; // Borracha, plástico, ...
 }
 
-export type newCarro = Omit<Carro, 'id'>;
+export type NewCarro = Omit<Carro, 'id'>;
