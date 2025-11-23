@@ -1,32 +1,43 @@
 // App.tsx
-
 // import de pacotes
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Toast from 'react-native-toast-message';
+import { createStackNavigator } from '@react-navigation/stack';
 
 // import de arquivos
-import AppNavigator from '@/navigation/AppNavigator';
-import { CarProvider } from '@/context/CarContext';
+import { ListaDeCarrinhosScreen } from '@/src/screens/ListaDeCarrinhos';
+import { DetalhesDoCarrinhoScreen } from '@/src/screens/DetalhesDoCarrinho';
+import { FormularioCarrinhoScreen } from '@/src/screens/FormularioCarrinho';
+import { Carrinho } from '@/src/types'; // Importa a interface Carrinho
+
+export type RootStackParamList = {
+  ListaDeCarrinhos: undefined;
+  DetalhesDoCarrinho: { carrinho: Carrinho };
+  FormularioCarrinho: { carrinho?: Carrinho };
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <CarProvider>
-      <NavigationContainer>
-        <AppNavigator />
-        <Toast />
-      </NavigationContainer>
-    </CarProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="ListaDeCarrinhos">
+        <Stack.Screen
+          name="ListaDeCarrinhos"
+          component={ListaDeCarrinhosScreen}
+          options={{ title: 'Meus Carrinhos' }}
+        />
+        <Stack.Screen
+          name="DetalhesDoCarrinho"
+          component={DetalhesDoCarrinhoScreen}
+          options={{ title: 'Detalhes do Carrinho' }}
+        />
+        <Stack.Screen
+          name="FormularioCarrinho"
+          component={FormularioCarrinhoScreen}
+          options={{ title: 'Formulário do Carrinho' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
