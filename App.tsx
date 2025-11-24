@@ -39,7 +39,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name="ListaDeCarrinhos"
         component={ListaDeCarrinhosScreen}
-        options={{ title: 'Meus Carrinhos' }}
+        options={{ title: 'Meus Carrinhos', headerShown: false }}
       />
       <Stack.Screen
         name="DetalhesDoCarrinho"
@@ -62,27 +62,27 @@ export default function App() {
         <Drawer.Screen
           name="HomeStack"
           component={HomeStackNavigator}
-          options={{ title: 'Início' }}
+          options={{ title: 'Meus Carrinhos' }}
         />
         <Drawer.Screen
           name="GerenciarMontadoras"
           component={GerenciarMontadoraScreen}
-          options={{ title: 'Gerenciar Montadoras' }}
+          options={{ title: 'Lista de Montadoras' }}
         />
         <Drawer.Screen
           name="GerenciarMarcas"
           component={GerenciarMarcasScreen}
-          options={{ title: 'Gerenciar Marcas de Brinquedo' }}
+          options={{ title: 'Lista Marcas de Brinquedo' }}
         />
         <Drawer.Screen
           name="GerenciarSeries"
           component={GerenciarSeriesScreen}
-          options={{ title: 'Gerenciar Séries' }}
+          options={{ title: 'Lista de Séries' }}
         />
         <Drawer.Screen
           name="GerenciarPaises"
           component={GerenciarPaisesScreen}
-          options={{ title: 'Gerenciar Países' }}
+          options={{ title: 'Lista de Países' }}
         />
       </Drawer.Navigator>
     </NavigationContainer>
