@@ -7,8 +7,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Picker } from '@react-native-picker/picker'; // Você precisará instalar este pacote: npm install @react-native-picker/picker ou yarn add @react-native-picker/picker
 
 // import de arquivos
-import { Carrinho } from '@/src/types';
+import { Carrinho, MarcaInfo, MontadoraInfo, PaisInfo } from '@/src/types'; // Importe as interfaces auxiliares
 import { RootStackParamList } from 'App'; // Ajuste o caminho conforme a estrutura
+import { montadoraVeiculo } from '../data/montadoraVeiculo';
 
 type FormularioCarrinhoScreenRouteProp = RouteProp<RootStackParamList, 'FormularioCarrinho'>;
 type FormularioCarrinhoScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FormularioCarrinho'>;
@@ -20,26 +21,36 @@ export function FormularioCarrinhoScreen() {
 
     const [codigo, setCodigo] = useState(initialCarrinho?.codigo || '');
     const [nome, setNome] = useState(initialCarrinho?.nome || '');
-    const [brand, setBrand] = useState(initialCarrinho?.brand || ''); // marcaBrinquedo
-    const [marca, setMarca] = useState(initialCarrinho?.marca || ''); // marcaVeiculo
+    const [montadora, setMontadora] = useState<MontadoraInfo | undefined>(initialCarrinho?.montadora); // marcaBrinquedo
+    const [marca, setMarca] = useState<MarcaInfo | undefined>(initialCarrinho?.marca); // marcaVeiculo
     const [cor, setCor] = useState(initialCarrinho?.cor || '');
-    const [pais, setPais] = useState(initialCarrinho?.pais || '');
+    const [pais, setPais] = useState<PaisInfo | undefined>(initialCarrinho?.pais);
     const [rubber, setRubber] = useState(initialCarrinho?.rubber || false);
 
     useEffect(() => {
         if (initialCarrinho) {
             setCodigo(initialCarrinho.codigo || '');
             setNome(initialCarrinho.nome);
-            setBrand(initialCarrinho.brand || '');
-            setMarca(initialCarrinho.marca || '');
+            setMontadora(initialCarrinho.montadora);
+            setMarca(initialCarrinho.marca);
             setCor(initialCarrinho.cor || '');
-            setPais(initialCarrinho.pais || '');
+            setPais(initialCarrinho.pais);
             setRubber(initialCarrinho.rubber || false);
         }
     }, [initialCarrinho]);
 
     const handleSave = () => {
-        // Aqui você integraria com o backend ou gerenciaria o estado global
+        const carrinhoParaSalvar: Carrinho = {
+            id: initialCarrinho?.id || String(Date.now()), // Gere um ID provisório se for um novo carrinho
+            nome: nome,
+            codigo: codigo,
+            marca: marca,
+            montadora: montadora,
+            cor: cor,
+            pais: pais,
+            rubber: rubber,
+            // ... adicione outros campos conforme sua interface Carrinho
+        };
         Alert.alert('Salvar', `Carrinho ${nome} salvo!`);
         navigation.goBack();
     };
@@ -51,7 +62,7 @@ export function FormularioCarrinhoScreen() {
                 style={styles.input}
                 value={codigo}
                 onChangeText={setCodigo}
-                placeholder="Código do carrinho (ex: CFH20)"
+                placeholder="Código (ex: CFH20)"
             />
 
             <Text style={styles.label}>Nome:</Text>
@@ -65,8 +76,8 @@ export function FormularioCarrinhoScreen() {
             <Text style={styles.label}>Marca do Brinquedo:</Text>
             <TextInput
                 style={styles.input}
-                value={brand}
-                onChangeText={setBrand}
+                value={marca?.nome || ''}
+                onChangeText={(text) => setMontadora}
                 placeholder="Hot Wheels, Matchbox, etc."
             />
             {/* Exemplo de Picker (descomente e instale @react-native-picker/picker se for usar) */}
@@ -74,8 +85,8 @@ export function FormularioCarrinhoScreen() {
             <Text style={styles.label}>Marca do Brinquedo:</Text>
             <View style={styles.pickerContainer}>
                 <Picker
-                    selectedValue={brand}
-                    onValueChange={(itemValue) => setBrand(itemValue)}
+                    selectedValue={montadora}
+                    onValueChange={(itemValue) => setMontadora(itemValue)}
                 >
                     <Picker.Item label="Hot Wheels" value="Hot Wheels" />
                     <Picker.Item label="Matchbox" value="Matchbox" />
@@ -84,11 +95,11 @@ export function FormularioCarrinhoScreen() {
             </View>
 
 
-            <Text style={styles.label}>Marca do Veículo:</Text>
+            <Text style={styles.label}>Montadora do Veículo:</Text>
             <TextInput
                 style={styles.input}
-                value={marca}
-                onChangeText={setMarca}
+                value={montadora?.nome}
+                onChangeText={(text) => setMarca({ ...montadoraVeiculo, nome: text })}
                 placeholder="Ferrari, Porsche, etc."
             />
 
@@ -103,8 +114,8 @@ export function FormularioCarrinhoScreen() {
             <Text style={styles.label}>País de Origem:</Text>
             <TextInput
                 style={styles.input}
-                value={pais}
-                onChangeText={setPais}
+                value={pais?.nome || ''}
+                onChangeText={(text) => setPais({ ...pais, nome: text })}
                 placeholder="Itália, Alemanha, Japão, etc."
             />
 

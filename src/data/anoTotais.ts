@@ -2,6 +2,11 @@
 
 export const totaisPorAno: { [key: number]: number } = {
     1998: 187,
+    2000: 250,
+    2001: 240,
+    2002: 240,
+    2003: 220,
+    2004: 212,
     2005: 187,
     2006: 223,
     2007: 180,
@@ -9,7 +14,7 @@ export const totaisPorAno: { [key: number]: number } = {
     2009: 190,
     2010: 240,
     2011: 244,
-    2012: 247,
+    2012: 248,
     2013: 250,
     2014: 250,
     2015: 250,
@@ -20,6 +25,9 @@ export const totaisPorAno: { [key: number]: number } = {
     2020: 250,
     2021: 250,
     2022: 250,
+    2023: 250,
+    2024: 250,
+    2025: 250,
 };
 
 // Se você precisar de um valor padrão para anos não listados, pode adicionar uma função auxiliar

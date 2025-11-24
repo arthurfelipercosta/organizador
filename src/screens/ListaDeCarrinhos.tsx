@@ -1,21 +1,17 @@
 // src/screens/ListaDeCarrinhos.tsx
 // import de pacotes
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 // import de arquivos
 import { Carrinho } from '@/src/types';
 import { RootStackParamList } from 'App'; // Ajuste o caminho conforme a estrutura
+import { mockCarrinhos } from '@/src/data/mock/carrinhos'; // Importe os mocks do arquivo separado
+
 
 type ListaDeCarrinhosScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ListaDeCarrinhos'>;
-
-const mockCarrinhos: Carrinho[] = [
-    { id: '1', nome: 'LaFerrari', marca: 'Ferrari', cor: 'Vermelho', rubber: true },
-    { id: '2', nome: 'Porsche 911 GT3 RS', marca: 'Porsche', cor: 'Azul', rubber: false },
-    { id: '3', nome: 'Nissan GT-R', marca: 'Nissan', cor: 'Prata', rubber: true },
-];
 
 export function ListaDeCarrinhosScreen() {
     const navigation = useNavigation<ListaDeCarrinhosScreenNavigationProp>();
@@ -25,8 +21,15 @@ export function ListaDeCarrinhosScreen() {
             style={styles.itemContainer}
             onPress={() => navigation.navigate('DetalhesDoCarrinho', { carrinho: item })}
         >
-            <Text style={styles.itemTitle}>{item.nome}</Text>
-            <Text style={styles.itemSubtitle}>{item.marca} - {item.cor}</Text>
+            {/* Exibe a imagem do carrinho (miniatura) */}
+            {item.urlImage && (
+                <Image source={{ uri: item.urlImage }} style={styles.thumbnailImage} />
+            )}
+            <View style={styles.itemTextContent}>
+                <Text style={styles.itemTitle}>{item.nome}</Text>
+                {/* Acessa a propriedade 'nome' de 'montadora' */}
+                <Text style={styles.itemSubtitle}>{item.montadora?.nome} - {item.cor}</Text>
+            </View>
         </TouchableOpacity>
     );
 
@@ -61,11 +64,23 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 8,
         marginBottom: 10,
+        flexDirection: 'row', // Adicionado para alinhar imagem e texto horizontalmente
+        alignItems: 'center',  // Adicionado para centralizar verticalmente
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.2,
         shadowRadius: 1.41,
         elevation: 2,
+    },
+    thumbnailImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 8,
+        marginRight: 15, // Aumentei o espaçamento
+        backgroundColor: '#e1e1e1', // Cor de fundo enquanto a imagem carrega
+    },
+    itemTextContent: {
+        flex: 1, // Permite que o texto ocupe o espaço restante
     },
     itemTitle: {
         fontSize: 18,
@@ -83,7 +98,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         right: 30,
-        bottom: 30,
+        bottom: 50,
         backgroundColor: '#007bff',
         borderRadius: 30,
         elevation: 8,
