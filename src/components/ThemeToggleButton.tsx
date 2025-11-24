@@ -1,23 +1,29 @@
-// src/components/ThemeToggleButton
+// src/components/ThemeToggleButton.tsx
 
 // import de pacotes
-import { TouchableOpacity } from 'react-native';
+import React from 'react';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+
 // import de arquivos
 import { useTheme } from '@/src/context/ThemeContext';
-import { colors } from '@/src/styles/colors';
 
-export const ThemeToggleButton = () => {
-    const { theme, toggleTheme } = useTheme();
-    const themeColors = colors[theme];
+export function ThemeToggleButton() {
+    const { themeName, toggleTheme, theme } = useTheme(); // Obtenha themeName e theme
 
     return (
-        <TouchableOpacity onPress={toggleTheme} style={{ marginRight: 15 }}>
+        <TouchableOpacity onPress={toggleTheme} style={styles.button}>
             <Ionicons
-                name={theme === 'light' ? 'moon' : 'sunny'}
+                name={themeName === 'dark' ? 'moon' : 'sunny'}
                 size={24}
-                color={themeColors.icon}
+                color={theme.text}
             />
         </TouchableOpacity>
     );
-};
+}
+
+const styles = StyleSheet.create({
+    button: {
+        padding: 10,
+    },
+});
