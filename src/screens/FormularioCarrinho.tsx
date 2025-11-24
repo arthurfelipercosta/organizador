@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Picker } from '@react-native-picker/picker'; // Você precisará instalar este pacote: npm install @react-native-picker/picker ou yarn add @react-native-picker/picker
+import { Picker } from '@react-native-picker/picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // import de arquivos
 import { Carrinho, MarcaInfo, MontadoraInfo, PaisInfo } from '@/src/types'; // Importe as interfaces auxiliares
@@ -57,77 +58,79 @@ export function FormularioCarrinhoScreen() {
 
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.label}>Código:</Text>
-            <TextInput
-                style={styles.input}
-                value={codigo}
-                onChangeText={setCodigo}
-                placeholder="Código (ex: CFH20)"
-            />
-
-            <Text style={styles.label}>Nome:</Text>
-            <TextInput
-                style={styles.input}
-                value={nome}
-                onChangeText={setNome}
-                placeholder="Nome do carrinho (ex: LaFerrari)"
-            />
-
-            <Text style={styles.label}>Marca do Brinquedo:</Text>
-            <TextInput
-                style={styles.input}
-                value={marca?.nome || ''}
-                onChangeText={(text) => setMontadora}
-                placeholder="Hot Wheels, Matchbox, etc."
-            />
-            {/* Exemplo de Picker (descomente e instale @react-native-picker/picker se for usar) */}
-
-            <Text style={styles.label}>Marca do Brinquedo:</Text>
-            <View style={styles.pickerContainer}>
-                <Picker
-                    selectedValue={montadora}
-                    onValueChange={(itemValue) => setMontadora(itemValue)}
-                >
-                    <Picker.Item label="Hot Wheels" value="Hot Wheels" />
-                    <Picker.Item label="Matchbox" value="Matchbox" />
-                    <Picker.Item label="GreenLight" value="GreenLight" />
-                </Picker>
-            </View>
-
-
-            <Text style={styles.label}>Montadora do Veículo:</Text>
-            <TextInput
-                style={styles.input}
-                value={montadora?.nome}
-                onChangeText={(text) => setMarca({ ...montadoraVeiculo, nome: text })}
-                placeholder="Ferrari, Porsche, etc."
-            />
-
-            <Text style={styles.label}>Cor:</Text>
-            <TextInput
-                style={styles.input}
-                value={cor}
-                onChangeText={setCor}
-                placeholder="Vermelho, Azul, Prata, etc."
-            />
-
-            <Text style={styles.label}>País de Origem:</Text>
-            <TextInput
-                style={styles.input}
-                value={pais?.nome || ''}
-                onChangeText={(text) => setPais({ ...pais, nome: text })}
-                placeholder="Itália, Alemanha, Japão, etc."
-            />
-
-            <View style={styles.switchContainer}>
-                <Text style={styles.label}>Pneu de Borracha?</Text>
-                <Switch
-                    onValueChange={setRubber}
-                    value={rubber}
+            <SafeAreaView style={{paddingBottom: 30}}>
+                <Text style={styles.label}>Código:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={codigo}
+                    onChangeText={setCodigo}
+                    placeholder="Código (ex: CFH20)"
                 />
-            </View>
 
-            <Button title="Salvar Carrinho" onPress={handleSave} />
+                <Text style={styles.label}>Nome:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={nome}
+                    onChangeText={setNome}
+                    placeholder="Nome do carrinho (ex: LaFerrari)"
+                />
+
+                <Text style={styles.label}>Marca do Brinquedo:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={marca?.nome || ''}
+                    onChangeText={(text) => setMontadora}
+                    placeholder="Hot Wheels, Matchbox, etc."
+                />
+                {/* Exemplo de Picker (descomente e instale @react-native-picker/picker se for usar) */}
+
+                <Text style={styles.label}>Marca do Brinquedo:</Text>
+                <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={montadora}
+                        onValueChange={(itemValue) => setMontadora(itemValue)}
+                    >
+                        <Picker.Item label="Hot Wheels" value="Hot Wheels" />
+                        <Picker.Item label="Matchbox" value="Matchbox" />
+                        <Picker.Item label="GreenLight" value="GreenLight" />
+                    </Picker>
+                </View>
+
+
+                <Text style={styles.label}>Montadora do Veículo:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={montadora?.nome}
+                    onChangeText={(text) => setMarca({ ...montadoraVeiculo, nome: text })}
+                    placeholder="Ferrari, Porsche, etc."
+                />
+
+                <Text style={styles.label}>Cor:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={cor}
+                    onChangeText={setCor}
+                    placeholder="Vermelho, Azul, Prata, etc."
+                />
+
+                <Text style={styles.label}>País de Origem:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={pais?.nome || ''}
+                    onChangeText={(text) => setPais({ ...pais, nome: text })}
+                    placeholder="Itália, Alemanha, Japão, etc."
+                />
+
+                <View style={styles.switchContainer}>
+                    <Text style={styles.label}>Pneu de Borracha?</Text>
+                    <Switch
+                        onValueChange={setRubber}
+                        value={rubber}
+                    />
+                </View>
+
+                <Button title="Salvar Carrinho" onPress={handleSave} />
+            </SafeAreaView>
         </ScrollView>
     );
 }
