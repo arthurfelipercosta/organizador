@@ -1,4 +1,5 @@
 // src/screens/DetalhesDoCarrinho.tsx
+
 // import de pacotes
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Alert, ScrollView } from 'react-native';

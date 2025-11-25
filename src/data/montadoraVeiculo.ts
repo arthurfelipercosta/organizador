@@ -1,3 +1,6 @@
+// src/data/montadoraVeiculo.ts
+
+// import de arquivos
 import { MontadoraInfo } from '@/src/types';
 
 export const montadoraVeiculo: MontadoraInfo[] = [

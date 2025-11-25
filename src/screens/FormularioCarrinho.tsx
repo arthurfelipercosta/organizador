@@ -1,4 +1,5 @@
 // src/screens/FormularioCarrinho.tsx
+
 // import de pacotes
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, Alert, ScrollView } from 'react-native';

@@ -1,4 +1,5 @@
 // src/screens/ListaDeCarrinhos.tsx
+
 // import de pacotes
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';

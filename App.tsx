@@ -1,4 +1,5 @@
 // App.tsx
+
 // import de pacotes
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
