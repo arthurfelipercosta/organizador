@@ -6,7 +6,6 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { SvgUri } from 'react-native-svg';
 
 // import de arquivos
 import { Carrinho } from '@/src/types'; // Importa a interface Carrinho
@@ -43,17 +42,16 @@ function CustomDrawerContent(props: any) {
   const { theme } = useTheme(); // Use o hook useTheme aqui para pegar o objeto de tema
 
   return (
-    <DrawerContentScrollView {...props} style={{ backgroundColor: theme.background }}> {/* Fundo do drawer muda */}
-      <View style={[styles.drawerHeader, { backgroundColor: theme.cardBackground }]}> {/* Cor do cabeçalho muda */}
-        <SvgUri
-          width={80}
-          height={80}
-          uri={require('./assets/sport-car.svg')}
+    <DrawerContentScrollView {...props} style={{ backgroundColor: theme.background }}>
+      <View style={[styles.drawerHeader, { backgroundColor: theme.cardBackground }]}>
+        <Image
+          source={require('./assets/sport-car.png')} 
+          style={{ width: 80, height: 80 }}
         />
         <Text style={[styles.drawerHeaderText, { color: theme.text }]}>Organizador de Carrinhos</Text>
       </View>
       <View style={styles.themeToggleContainer}>
-        <ThemeToggleButton /> {/* Adicione o botão de alternar tema aqui */}
+        <ThemeToggleButton />
       </View>
       <DrawerItemList {...props} />
     </DrawerContentScrollView>
@@ -80,40 +78,45 @@ function HomeStackNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="HomeStack">
-        <Drawer.Screen
-          name="HomeStack"
-          component={HomeStackNavigator}
-          options={{ title: 'Meus Carrinhos' }}
-        />
-        <Drawer.Screen
-          name="GerenciarMontadoras"
-          component={GerenciarMontadoraScreen}
-          options={{ title: 'Lista de Montadoras' }}
-        />
-        <Drawer.Screen
-          name="GerenciarMarcas"
-          component={GerenciarMarcasScreen}
-          options={{ title: 'Lista Marcas de Brinquedo' }}
-        />
-        <Drawer.Screen
-          name="GerenciarSeries"
-          component={GerenciarSeriesScreen}
-          options={{ title: 'Lista de Séries' }}
-        />
-        <Drawer.Screen
-          name="GerenciarPaises"
-          component={GerenciarPaisesScreen}
-          options={{ title: 'Lista de Países' }}
-        />
-        <Drawer.Screen
-          name="FormularioCarrinho"
-          component={FormularioCarrinhoScreen}
-          options={{ title: 'Formulário do Carrinho' }}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName="HomeStack"
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
+          <Drawer.Screen
+            name="HomeStack"
+            component={HomeStackNavigator}
+            options={{ title: 'Meus Carrinhos', headerRight: () => <ThemeToggleButton /> }}
+          />
+          <Drawer.Screen
+            name="GerenciarMontadoras"
+            component={GerenciarMontadoraScreen}
+            options={{ title: 'Lista de Montadoras', headerRight: () => <ThemeToggleButton /> }}
+          />
+          <Drawer.Screen
+            name="GerenciarMarcas"
+            component={GerenciarMarcasScreen}
+            options={{ title: 'Lista Marcas de Brinquedo', headerRight: () => <ThemeToggleButton /> }}
+          />
+          <Drawer.Screen
+            name="GerenciarSeries"
+            component={GerenciarSeriesScreen}
+            options={{ title: 'Lista de Séries', headerRight: () => <ThemeToggleButton /> }}
+          />
+          <Drawer.Screen
+            name="GerenciarPaises"
+            component={GerenciarPaisesScreen}
+            options={{ title: 'Lista de Países', headerRight: () => <ThemeToggleButton /> }}
+          />
+          <Drawer.Screen
+            name="FormularioCarrinho"
+            component={FormularioCarrinhoScreen}
+            options={{ title: 'Formulário do Carrinho', headerRight: () => <ThemeToggleButton /> }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 
